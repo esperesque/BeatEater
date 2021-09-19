@@ -13,12 +13,12 @@ FPS = 60
 FrameClock = pygame.time.Clock()
 
 # Declare colors
-RED = pygame.Color(255, 0, 0)
-GREEN = pygame.Color(0, 255, 0)
-BLUE = pygame.Color(0, 0, 255)
-BLACK = pygame.Color(0, 0, 0)
-WHITE = pygame.Color(255, 255, 255)
-CORNFLOWER = pygame.Color(100, 149, 237)
+#RED = pygame.Color(255, 0, 0)
+#GREEN = pygame.Color(0, 255, 0)
+#BLUE = pygame.Color(0, 0, 255)
+#BLACK = pygame.Color(0, 0, 0)
+#WHITE = pygame.Color(255, 255, 255)
+#CORNFLOWER = pygame.Color(100, 149, 237)
 
 # Set up the main game window
 DISPLAYSURF = pygame.display.set_mode((640, 512))
