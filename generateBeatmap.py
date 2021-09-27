@@ -1,13 +1,14 @@
 import aubio
 
-def generateBeatmap(method):
+def generateBeatmap(path, method, outPath):
     win_s = 512                 # fft size
     hop_s = win_s // 2 
-    path = "crab_rave.wav"
+    #path = "crab_rave.wav"
     s = aubio.source(path)
     samplerate = s.samplerate
 
     o = aubio.onset(method)
+    o.set_threshold(0.4)
 
     # list of onsets, in samples
     timestamps = []
@@ -22,7 +23,7 @@ def generateBeatmap(method):
         total_frames += read
         if read < hop_s: break
 
-    f= open("beatmap_" + method + ".txt","w+")
+    f= open("beatmaps/" + outPath, "w+")
     for timestamp in timestamps:
         f.write(str(timestamp / samplerate*1.0) + "\n")
     f.close()
@@ -30,7 +31,7 @@ def generateBeatmap(method):
 
 
 
-methods = ["energy", "hfc", "complex", "phase", "wphase", "specdiff", "kl", "mkl", "specflux"]
+#methods = ["energy", "hfc", "complex", "phase", "wphase", "specdiff", "kl", "mkl", "specflux"]
 
-for method in methods:
-    generateBeatmap(method)
+#for method in methods:
+#    generateBeatmap(method)

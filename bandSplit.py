@@ -26,5 +26,3 @@ def bandSplit(path):
     b = signal.firwin(101, cutoff=4000, fs=sr, pass_zero="highpass")
     x = signal.lfilter(b, [1.0], x)
     wavfile.write("music_treb.wav", sr, x.astype(numpy.int16))
-
-bandSplit("120_bpm.wav")
