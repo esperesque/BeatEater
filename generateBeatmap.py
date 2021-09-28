@@ -8,7 +8,7 @@ def generateBeatmap(path, method, outPath):
     samplerate = s.samplerate
 
     o = aubio.onset(method)
-    o.set_threshold(0.4)
+    o.set_threshold(0.2)
 
     # list of onsets, in samples
     timestamps = []

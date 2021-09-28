@@ -28,19 +28,20 @@ blocks = []
 
 class Beatmap():
 
-    beats = []
-    current_beat = 0
-    next_beat = 0
-    #path = "nothing.txt"
-
-    def __init__(self, path):
+    def __init__(self, path, pos):
+        self.beats = []
+        self.current_beat = 0
+        self.next_beat = 0
+        self.position = pos
+        
         inFile = open(path)
         for line in inFile:
             self.beats.append(float(line))
+        inFile.close()
 
     def progress(self, time):
         if time >= self.current_beat:
-            newBlock = Block(0)
+            newBlock = Block(self.position)
             blocks.append(newBlock)
             self.current_beat = self.beats[self.next_beat]
             self.next_beat += 1
@@ -52,28 +53,21 @@ class Block(pygame.sprite.Sprite):
     
     def __init__(self, position):
         # Define a surface for the Block
-        self.surf = pygame.Surface((64,256))
+        self.surf = pygame.Surface((32,32))
         if position == 0:
             self.color = RED
         if position == 1:
             self.color = GREEN
         if position == 2:
             self.color = BLUE
-        column = random.randint(1, 3)
+        column = random.randint(1, 4)
         self.rect = self.surf.get_rect(center = ((position*300)+column*40, 0))
 
     def move(self):
-        self.rect.move_ip(0, 64)
+        self.rect.move_ip(0, 16)
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect)
-        
-
-#block1 = Block()
-
-#beatmap_bass = []
-#beatmap_mid = []
-#beatmap_treb = []
 
 # Set music
 music = "brink.wav"
@@ -87,31 +81,15 @@ bmap.generateBeatmap("music_bass.wav", "hfc", "bassMap.txt")
 bmap.generateBeatmap("music_mid.wav", "hfc", "midMap.txt")
 bmap.generateBeatmap("music_treb.wav", "hfc", "trebMap.txt")
 
-bassMap = Beatmap("beatmaps/trebMap.txt")
+bassMap = Beatmap("beatmaps/bassMap.txt", 0)
+midMap = Beatmap("beatmaps/midMap.txt", 1)
+trebMap = Beatmap("beatmaps/trebMap.txt", 2)
 beatmaps = []
 beatmaps.append(bassMap)
-
-# Read textfile
-#inFile = open("beatmaps/bassMap.txt")
-#for line in inFile:
-    #print(line)
-#    beatmap_bass.append(float(line))
-
-#inFile2 = open("beatmaps/midMap.txt")
-#for line in inFile2:
-#    beatmap_mid.append(float(line))
-
-#inFile3 = open("beatmaps/trebMap.txt")
-#for line in inFile3:
-#    beatmap_treb.append(float(line))
+beatmaps.append(midMap)
+beatmaps.append(trebMap)
 
 time_passed = 0
-#next_onset_bass = beatmap_bass[0]
-#next_onset_mid = beatmap_mid[0]
-#next_onset_treb = beatmap_treb[0]
-#current_beat_bass = 0
-#current_beat_mid = 0
-#current_beat_treb = 0
 
 #music = "brink.wav"
 pygame.mixer.music.load(music)
@@ -132,37 +110,12 @@ while True:
 
     for bmap in beatmaps:
         bmap.progress(time_passed)
-        
-
-    #if time_passed >= next_onset_bass:
-    #    newBlock = Block(0)
-    #    blocks.append(newBlock)
-    #    current_beat_bass += 1
-    #    next_onset_bass = beatmap_bass[current_beat_bass]
-
-    #if time_passed >= next_onset_mid:
-    #    newBlock = Block(1)
-    #    blocks.append(newBlock)
-    #    current_beat_mid += 1
-    #    next_onset_mid = beatmap_mid[current_beat_mid]    
-
-    #if time_passed >= next_onset_treb:
-    #    newBlock = Block(2)
-    #    blocks.append(newBlock)
-    #    current_beat_treb += 1
-    #    next_onset_treb = beatmap_treb[current_beat_treb]    
     
     SCREEN.fill(BLACK)
-
-    
 
     for aBlock in blocks:
         aBlock.move()
         aBlock.draw(SCREEN)
-    
-    #block1.move()
-    #block1.draw(SCREEN)
-    
 
     pygame.display.update()
 
