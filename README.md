@@ -5,11 +5,11 @@ A simple PyGame rhythm game that generates levels from user-selected audio track
 
 !["Brief gameplay footage"](demo_gif.gif)
 
-Dependencies:
--PyGame
--Aubio
--SciPy
--PyDub
+### Dependencies:
+- PyGame
+- Aubio
+- SciPy
+- PyDub
 
 To start the game, run the file gameLoop.py. The player is controlled with the left and right arrow keys.
 
